@@ -98,8 +98,8 @@
     }
 
     // Process inputs, placeholders, select options
-    function transformControls() {
-        document.querySelectorAll('input, select, textarea').forEach(control => {
+    function transformControls(root = document) {
+        root.querySelectorAll('input, select, textarea').forEach(control => {
             if (control.type === 'hidden') return;
 
             const name = (control.name || '').toLowerCase();
@@ -157,8 +157,8 @@
     }
 
     // Replace images with wireframe placeholders
-    function transformImages() {
-        document.querySelectorAll('img').forEach(img => {
+    function transformImages(root = document) {
+        root.querySelectorAll('img').forEach(img => {
             if (img.classList.contains('wireframe-img-placeholder')) return;
 
             const width = img.getAttribute('width') || img.clientWidth || 80;
@@ -177,9 +177,9 @@
     }
 
     // Apply schematic layout to logo and chart elements
-    function transformDynamicComponents() {
+    function transformDynamicComponents(root = document) {
         // Insert Logo in sidebar header
-        const sidebarHeader = document.querySelector('.sidebar-header');
+        const sidebarHeader = root.querySelector('.sidebar-header');
         if (sidebarHeader && !sidebarHeader.querySelector('.wireframe-crossed-box')) {
             sidebarHeader.innerHTML = `
                 <div class="wireframe-crossed-box" style="width: 100%; height: 60px;">
@@ -189,7 +189,7 @@
         }
 
         // Replace actual canvases/charts with grafik box
-        document.querySelectorAll('canvas, .chart-container, #chart, #grafik').forEach(chart => {
+        root.querySelectorAll('canvas, .chart-container, #chart, #grafik').forEach(chart => {
             if (chart.parentElement.classList.contains('grafik-box-wrapper')) return;
             
             const wrapper = document.createElement('div');
@@ -204,8 +204,8 @@
     }
 
     // Apply schematic layout to Login Page visual side (Strict B&W Mode)
-    function transformLoginPage() {
-        const loginVisual = document.querySelector('.login-visual');
+    function transformLoginPage(root = document) {
+        const loginVisual = root.querySelector('.login-visual');
         if (loginVisual) {
             loginVisual.innerHTML = `
                 <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #ffffff; display: flex; align-items: center; justify-content: center; padding: 40px; box-sizing: border-box;">
@@ -217,59 +217,117 @@
         }
     }
 
+    // Process nested same-origin iframes
+    function processIframes(root = document) {
+        root.querySelectorAll('iframe').forEach(iframe => {
+            const handleLoad = () => {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (iframeDoc && iframeDoc.body) {
+                        transformDocument(iframeDoc);
+                        observeDocument(iframeDoc);
+                    }
+                } catch (e) {
+                    console.error("Iframe access denied (cross-origin):", e);
+                }
+            };
+
+            // If already loaded, transform immediately
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (iframeDoc && iframeDoc.readyState === 'complete' && iframeDoc.body) {
+                    handleLoad();
+                }
+            } catch (e) {}
+
+            // Attach event listener for subsequent loads/reloads
+            if (!iframe._hasLoadListener) {
+                iframe.addEventListener('load', handleLoad);
+                iframe._hasLoadListener = true;
+            }
+        });
+    }
+
+    // Observe document changes dynamically
+    function observeDocument(doc) {
+        if (!doc || !doc.body || doc._observed) return;
+
+        const observer = new MutationObserver((mutations) => {
+            let shouldRun = false;
+            for (const mutation of mutations) {
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                    let hasRealChanges = false;
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            const tag = node.tagName.toUpperCase();
+                            if (tag !== 'SCRIPT' && tag !== 'STYLE' && !node.classList.contains('wireframe-img-placeholder') && !node.classList.contains('wireframe-crossed-box') && !node.classList.contains('wireframe-text-bar')) {
+                                hasRealChanges = true;
+                            }
+                        } else if (node.nodeType === Node.TEXT_NODE) {
+                            const val = node.nodeValue.trim();
+                            if (val && !val.includes('VARCHAR') && !val.includes('CHAR') && !val.includes('dd/mm/yy') && !val.includes('grafik') && !/^[x.\s,%+\-Rp$]*$/.test(val)) {
+                                hasRealChanges = true;
+                            }
+                        }
+                    });
+                    if (hasRealChanges) {
+                        shouldRun = true;
+                        break;
+                    }
+                } else if (mutation.type === 'characterData') {
+                    const val = mutation.target.nodeValue.trim();
+                    if (val && !val.includes('VARCHAR') && !val.includes('CHAR') && !val.includes('dd/mm/yy') && !val.includes('grafik') && !/^[x.\s,%+\-Rp$]*$/.test(val)) {
+                        shouldRun = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldRun) {
+                observer.disconnect();
+                transformDocument(doc);
+                observer.observe(doc.body, { childList: true, subtree: true, characterData: true });
+            }
+        });
+
+        observer.observe(doc.body, { childList: true, subtree: true, characterData: true });
+        doc._observed = observer;
+    }
+
+    // Run transformations on a target document
+    function transformDocument(doc) {
+        try {
+            if (doc.documentElement) {
+                doc.documentElement.classList.add('blueprint-mode');
+            }
+            if (doc.body) {
+                doc.body.classList.add('blueprint-mode');
+            }
+
+            transformLoginPage(doc);
+            transformDynamicComponents(doc);
+            transformImages(doc);
+            if (doc.body) {
+                walkDOM(doc.body);
+            }
+            transformControls(doc);
+            processIframes(doc);
+        } catch (e) {
+            console.error("Error transforming document:", e);
+        }
+    }
+
     // Main run
     function runTransformation() {
-        transformLoginPage();
-        transformDynamicComponents();
-        transformImages();
-        walkDOM(document.body);
-        transformControls();
+        transformDocument(document);
     }
 
     // Run immediately when script loads
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runTransformation);
+        document.addEventListener('DOMContentLoaded', () => {
+            runTransformation();
+            observeDocument(document);
+        });
     } else {
         runTransformation();
-    }
-
-    // Set up MutationObserver to handle dynamic contents (e.g. AJAX loads, modals, text mutators)
-    const observer = new MutationObserver((mutations) => {
-        let shouldRun = false;
-        for (const mutation of mutations) {
-            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-                let hasRealChanges = false;
-                mutation.addedNodes.forEach(node => {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        const tag = node.tagName.toUpperCase();
-                        if (tag !== 'SCRIPT' && tag !== 'STYLE' && !node.classList.contains('wireframe-img-placeholder') && !node.classList.contains('wireframe-crossed-box') && !node.classList.contains('wireframe-text-bar')) {
-                            hasRealChanges = true;
-                        }
-                    } else if (node.nodeType === Node.TEXT_NODE) {
-                        const val = node.nodeValue.trim();
-                        if (val && !val.includes('VARCHAR') && !val.includes('CHAR') && !val.includes('dd/mm/yy') && !val.includes('grafik') && !/^[x.\s,%+\-Rp$]*$/.test(val)) {
-                            hasRealChanges = true;
-                        }
-                    }
-                });
-                if (hasRealChanges) {
-                    shouldRun = true;
-                    break;
-                }
-            } else if (mutation.type === 'characterData') {
-                const val = mutation.target.nodeValue.trim();
-                if (val && !val.includes('VARCHAR') && !val.includes('CHAR') && !val.includes('dd/mm/yy') && !val.includes('grafik') && !/^[x.\s,%+\-Rp$]*$/.test(val)) {
-                    shouldRun = true;
-                    break;
-                }
-            }
-        }
-        if (shouldRun) {
-            observer.disconnect();
-            runTransformation();
-            observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-        }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+        observeDocument(document);
 })();
