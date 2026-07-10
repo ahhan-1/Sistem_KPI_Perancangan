@@ -147,8 +147,8 @@ body.blueprint-mode input[type="date"],
 body.blueprint-mode select {
     background-color: #ffffff !important;
     border: 2px solid #000000 !important;
-    color: #000000 !important;
-    /* Show values for date/month navigation */
+    color: transparent !important;
+    /* Hide values for wireframe aesthetic while keeping interactive */
     height: 40px !important;
     padding: 5px 10px !important;
 }
