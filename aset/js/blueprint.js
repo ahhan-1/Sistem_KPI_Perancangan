@@ -132,10 +132,9 @@
                         control.options[0].textContent = 'dd/mm/yy';
                     }
                 } else {
-                    if (type === 'date' || type === 'month') {
-                        control.type = 'text';
+                    if (type !== 'date' && type !== 'month') {
+                        control.value = 'dd/mm/yy';
                     }
-                    control.value = 'dd/mm/yy';
                 }
             } else if (isDateRelated) {
                 control.classList.add('wireframe-date-control');
@@ -149,10 +148,9 @@
                         control.options[0].textContent = 'dd/mm/yy';
                     }
                 } else {
-                    if (type === 'date' || type === 'month') {
-                        control.type = 'text';
+                    if (type !== 'date' && type !== 'month') {
+                        control.value = 'dd/mm/yy';
                     }
-                    control.value = 'dd/mm/yy';
                 }
             }
         });

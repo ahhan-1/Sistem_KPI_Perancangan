@@ -133,13 +133,22 @@ body.blueprint-mode .input-kontrol-sm,
 body.blueprint-mode input[type="text"],
 body.blueprint-mode input[type="password"],
 body.blueprint-mode input[type="number"],
-body.blueprint-mode input[type="month"],
-body.blueprint-mode select,
 body.blueprint-mode textarea {
     background-color: #ffffff !important;
     border: 2px solid #000000 !important;
     color: transparent !important;
     /* Hide values */
+    height: 40px !important;
+    padding: 5px 10px !important;
+}
+
+body.blueprint-mode input[type="month"],
+body.blueprint-mode input[type="date"],
+body.blueprint-mode select {
+    background-color: #ffffff !important;
+    border: 2px solid #000000 !important;
+    color: #000000 !important;
+    /* Show values for date/month navigation */
     height: 40px !important;
     padding: 5px 10px !important;
 }
