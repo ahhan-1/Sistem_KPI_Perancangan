@@ -1,0 +1,674 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import 'blueprint.css';
+
+:root {
+    --biru-utama: #0245A3;
+    --biru-muda: #8FBAF3;
+    --cyan-halus: #BDF1F6;
+    --putih-salju: #F2FCFC;
+    --putih: #ffffff;
+    --abu-abu-muda: #f4f7f6;
+    --teks-gelap: #333333;
+    --transisi: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--abu-abu-muda);
+    color: var(--teks-gelap);
+}
+
+/* Utilitas */
+.bg-utama {
+    background-color: var(--biru-utama);
+    color: var(--putih);
+}
+
+.bg-muda {
+    background-color: var(--biru-muda);
+    color: var(--putih);
+}
+
+.bg-cyan {
+    background-color: var(--cyan-halus);
+    color: var(--biru-utama);
+}
+
+.bg-salju {
+    background-color: var(--putih-salju);
+}
+
+.teks-utama {
+    color: var(--biru-utama);
+}
+
+.teks-muda {
+    color: var(--biru-muda);
+}
+
+/* Tombol */
+.tombol {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transisi);
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.tombol-utama {
+    background-color: var(--biru-utama);
+    color: var(--putih);
+}
+
+.tombol-utama:hover {
+    background-color: #013582;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(2, 69, 163, 0.2);
+}
+
+/* Card/Panel */
+.kartu {
+    background-color: var(--putih);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.kartu h3 {
+    font-size: 1.15em;
+    font-weight: 700;
+}
+
+/* Form */
+.input-grup {
+    margin-bottom: 15px;
+}
+
+.input-grup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 0.9em;
+    color: var(--biru-utama);
+}
+
+.input-kontrol {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9em;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-kontrol-sm {
+    width: 100%;
+    padding: 5px 8px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    font-size: 0.8em;
+    outline: none;
+}
+
+.input-kontrol:focus,
+.input-kontrol-sm:focus {
+    border-color: var(--biru-utama);
+    box-shadow: 0 0 0 2px rgba(143, 186, 243, 0.2);
+}
+
+/* Halaman Login Split Layout */
+.split-login-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.login-visual {
+    flex: 6.5;
+    background: url('../gambar/bsb.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 60px;
+}
+
+.login-visual::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(2, 69, 163, 0.8), rgba(143, 186, 243, 0.4));
+    backdrop-filter: blur(4px);
+}
+
+.visual-content {
+    position: relative;
+    z-index: 2;
+    color: var(--putih);
+    max-width: 600px;
+}
+
+.visual-content h1 {
+    font-size: 3.5em;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.visual-content p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.login-form-side {
+    flex: 3.5;
+    background-color: var(--putih);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+.login-form-box {
+    width: 100%;
+    max-width: 350px;
+}
+
+.login-header {
+    margin-bottom: 40px;
+}
+
+.login-header h2 {
+    color: var(--biru-utama);
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.login-header p {
+    color: #888;
+}
+
+.input-icon-group {
+    position: relative;
+    margin-top: 10px;
+}
+
+.input-icon-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--biru-utama);
+}
+
+.input-icon-group .input-kontrol {
+    padding-left: 45px;
+    height: 50px;
+    background-color: #f9f9f9;
+}
+
+.alert-error {
+    background-color: #ffebee;
+    color: #d32f2f;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-left: 4px solid #d32f2f;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    width: 240px;
+    min-width: 240px;
+    /* Lock the width */
+    background-color: var(--biru-utama);
+    color: var(--putih);
+    padding: 20px 0;
+    flex-shrink: 0;
+    transition: var(--transisi);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    align-self: flex-start;
+}
+
+.sidebar-header {
+    padding: 0 25px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.sidebar-header h3 {
+    font-size: 1.25em;
+    font-weight: 700;
+}
+
+.nav-menu {
+    list-style: none;
+}
+
+.nav-item {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.85em;
+    transition: var(--transisi);
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.nav-item i {
+    width: 20px;
+    text-align: center;
+}
+
+.nav-item:hover,
+.nav-item.aktif {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--putih);
+    border-left: 4px solid var(--biru-muda);
+}
+
+.main-content {
+    flex: 1;
+    background-color: #f8f9fa;
+    padding: 30px;
+}
+
+.halaman-header {
+    margin-bottom: 30px;
+}
+
+.halaman-header h1 {
+    font-size: 1.6em;
+    color: var(--biru-utama);
+}
+
+/* Tabel Kontrak */
+.tabel-kpi {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.tabel-kpi th {
+    background-color: var(--biru-utama);
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 0.85em;
+}
+
+.tabel-kpi td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.85em;
+}
+
+.status-bobot {
+    padding: 15px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    border: 1px solid var(--biru-muda);
+}
+
+/* Sticky Footer Bobot (Glassmorphism Style) */
+.sticky-bobot {
+    position: fixed;
+    bottom: 20px;
+    /* Diangkat sedikit dari dasar */
+    left: 240px;
+    /* Container Bobot dengan Persen */
+}
+.input-bobot-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.input-bobot-container input {
+    width: 65px !important;
+    text-align: center;
+    padding-right: 5px !important;
+}
+
+.persen-suffix {
+    font-size: 0.9em;
+    color: #666;
+    font-weight: bold;
+}
+.sticky-bobot {
+    /* Jarak dari sidebar */
+    right: 30px;
+    /* Jarak dari sisi kanan */
+    background: rgba(255, 255, 255, 0.85);
+    /* Semi transparan */
+    backdrop-filter: blur(10px);
+    /* Efek kaca blur */
+    -webkit-backdrop-filter: blur(10px);
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    /* Pojok membulat agar modern */
+    z-index: 1000;
+    transition: var(--transisi);
+}
+
+.bobot-info {
+    flex: 1;
+    margin-right: 40px;
+}
+
+.info-teks {
+    margin-bottom: 8px;
+}
+
+#labelTotalBobot {
+    font-size: 1.2em;
+    font-weight: 800;
+    color: var(--biru-utama);
+}
+
+.progress-container {
+    width: 100%;
+    height: 12px;
+    background-color: #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--biru-muda);
+    transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+.btn-simpan-kpi {
+    background-color: #ccc;
+    color: white;
+    cursor: not-allowed;
+    width: 200px;
+    height: 50px;
+    border-radius: 8px;
+}
+
+.btn-simpan-kpi.ready {
+    background-color: var(--biru-utama);
+    cursor: pointer;
+}
+
+.btn-simpan-kpi.ready:hover {
+    background-color: var(--biru-muda);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 992px) {
+    .sticky-bobot {
+        left: 0;
+    }
+}
+
+/* Hilangkan Spinner Angka Bawaan Browser */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Filter Periode Modern (Month-Year Picker) */
+.filter-periode-container {
+    position: relative;
+    background: white;
+    padding: 8px 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.filter-periode-container i {
+    color: var(--biru-utama);
+    font-size: 1.1em;
+}
+
+.input-month {
+    border: none;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #2d3748;
+    font-size: 0.95em;
+    outline: none;
+    cursor: pointer;
+    padding: 2px 25px 2px 5px;
+    /* Tambah padding kanan buat chevron */
+    position: relative;
+    z-index: 2;
+}
+
+/* SEMBUNYIKAN IKON KALENDER BAWAAN */
+.input-month::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    color: transparent;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* PASANG IKON DROPDOWN (CHEVRON) */
+.filter-periode-container::after {
+    content: '\f078';
+    /* fa-chevron-down */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 15px;
+    color: #a0aec0;
+    font-size: 0.75em;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* KELAS KHUSUS UNTUK MENGHILANGKAN CHEVRON (MISAL DI FILTER TAHUN) */
+.filter-periode-container.no-chevron::after {
+    display: none;
+}
+
+.filter-year-container {
+    background: white;
+    padding: 8px 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.filter-year-container i {
+    color: var(--biru-utama);
+    font-size: 1.1em;
+}
+
+.input-year-select {
+    border: none;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #2d3748;
+    font-size: 1.05em;
+    outline: none;
+    cursor: pointer;
+    padding: 2px 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* Status Badges standardized */
+.badge-pill {
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.85em;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+}
+
+.badge-kuning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge-hijau {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.badge-merah {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* ==========================================================================
+   SYSTEM PRINTING (WINDOWS PRINT OPTIMIZATION)
+   ========================================================================== */
+@media print {
+
+    /* 1. Hard Reset Margin Browser */
+    @page {
+        size: A4 portrait;
+        margin: 0;
+        /* Kita atur margin sendiri via padding container */
+    }
+
+    /* 2. Global Reset untuk Cetak */
+    body {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Sembunyikan elemen UI yang tidak perlu */
+    .sidebar,
+    .navbar,
+    .top-bar,
+    .no-print,
+    .tombol,
+    .breadcrumb,
+    .filter-box {
+        display: none !important;
+    }
+
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    /* 3. Container Laporan (Anti-Zonk) */
+    .print-container {
+        width: 21cm;
+        /* Lebar A4 */
+        min-height: 29.7cm;
+        margin: 0 auto;
+        padding: 0.5cm 0.5cm;
+        /* Margin internal dipersempit agar muat lebih banyak data */
+        position: relative;
+        background: white;
+        box-sizing: border-box;
+        page-break-after: always;
+        /* Pastikan modul selanjutnya pindah kertas */
+    }
+    
+    .print-container:last-of-type {
+        page-break-after: auto; /* Mencegah halaman kosong di akhir print */
+    }
+
+    /* 4. Optimasi Tabel untuk Print */
+    table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+
+    th,
+    td {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* 5. Utility Page Break */
+    .page-break {
+        display: block;
+        page-break-before: always;
+        break-before: page;
+    }
+
+    .no-break {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Tanda tangan agar tidak terpotong di akhir halaman */
+    .signature-section {
+        margin-top: 1cm;
+        page-break-inside: avoid;
+    }
+}
