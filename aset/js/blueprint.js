@@ -69,8 +69,8 @@
         const hasAlphabet = /[a-zA-Z]/.test(trimmed.replace(/\bRp\b/gi, '')); // exclude 'Rp'
 
         if (hasDigits && !hasAlphabet) {
-            // Numeric data -> convert to literal 'xxxxxxxxxxxxxxxxxxxxxxxxxxx'
-            node.nodeValue = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx';
+            // Numeric data -> convert to literal 'xxxxxxxxxxxxxxxxxxxxxx'
+            node.nodeValue = 'xxxxxxxxxxxxxxxxxxxxxx';
             return;
         }
 
@@ -125,17 +125,17 @@
                 
                 if (control.tagName.toUpperCase() === 'SELECT') {
                     control.querySelectorAll('option').forEach(opt => {
-                        opt.textContent = 'yy';
+                        opt.textContent = 'dd/mm/yy';
                         opt.classList.add('wireframe-date-option');
                     });
                     if (control.options.length > 0) {
-                        control.options[0].textContent = 'yy';
+                        control.options[0].textContent = 'dd/mm/yy';
                     }
                 } else {
                     if (type === 'date' || type === 'month') {
                         control.type = 'text';
                     }
-                    control.value = 'yy';
+                    control.value = 'dd/mm/yy';
                 }
             } else if (isDateRelated) {
                 control.classList.add('wireframe-date-control');
