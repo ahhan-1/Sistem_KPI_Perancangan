@@ -11,7 +11,7 @@ session_start();
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS Custom -->
-    <link rel="stylesheet" href="aset/css/gaya.css">
+    <link rel="stylesheet" href="aset/css/gaya.css?v=<?= time() ?>">
 </head>
 
 <body>
@@ -96,7 +96,7 @@ session_start();
             }
         });
     </script>
-    <script src="aset/js/blueprint.js"></script>
+    <script src="aset/js/blueprint.js?v=<?= time() ?>"></script>
 </body>
 
 </html>

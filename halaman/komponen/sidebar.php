@@ -198,7 +198,7 @@ window.onclick = function(event) {
     }
 }
 </script>
-<script src="../../aset/js/blueprint.js"></script>
+<script src="../../aset/js/blueprint.js?v=<?= time() ?>"></script>
 
 
 

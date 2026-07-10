@@ -99,7 +99,7 @@ if ($mod == 'all' || $mod == 'r')  include "../templates/tpl_resume.php";
 <head>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($title_pdf) ?></title>
-    <link rel="stylesheet" href="../../../aset/css/gaya.css">
+    <link rel="stylesheet" href="../../../aset/css/gaya.css?v=<?= time() ?>">
     <style>
         /* Sembunyikan tampilan layar agar terasa langsung ke dialog print */
         body {
@@ -147,7 +147,7 @@ if ($mod == 'all' || $mod == 'r')  include "../templates/tpl_resume.php";
         </div>
     <?php endif; ?>
 
-    <script src="../../../aset/js/blueprint.js"></script>
+    <script src="../../../aset/js/blueprint.js?v=<?= time() ?>"></script>
 </body>
 <script>
     // Pastikan document.title ter-set dengan benar sebelum print

@@ -1,7 +1,9 @@
 (function () {
-    // Apply blueprint mode class to body immediately
+    // Apply blueprint mode class immediately and safely
     document.documentElement.classList.add('blueprint-mode');
-    document.body.classList.add('blueprint-mode');
+    if (document.body) {
+        document.body.classList.add('blueprint-mode');
+    }
 
     // Walk the DOM tree recursively
     function walkDOM(node) {
@@ -77,7 +79,7 @@
         // Otherwise it is normal text (varchar/char) -> replace with solid black bar
         const isHeader = parent && ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'TH'].includes(parent.tagName.toUpperCase());
         
-        const span = document.createElement('span');
+        const span = node.ownerDocument.createElement('span');
         span.className = isHeader ? 'wireframe-text-bar header-bar' : 'wireframe-text-bar body-bar';
         
         // Proportional width based on text length
@@ -89,10 +91,10 @@
         const spaceBefore = val.startsWith(' ') || val.startsWith('\n') || val.startsWith('\t');
         const spaceAfter = val.endsWith(' ') || val.endsWith('\n') || val.endsWith('\t');
         
-        const container = document.createElement('span');
-        if (spaceBefore) container.appendChild(document.createTextNode(' '));
+        const container = node.ownerDocument.createElement('span');
+        if (spaceBefore) container.appendChild(node.ownerDocument.createTextNode(' '));
         container.appendChild(span);
-        if (spaceAfter) container.appendChild(document.createTextNode(' '));
+        if (spaceAfter) container.appendChild(node.ownerDocument.createTextNode(' '));
         
         node.parentNode.replaceChild(container, node);
     }
@@ -164,7 +166,7 @@
             const width = img.getAttribute('width') || img.clientWidth || 80;
             const height = img.getAttribute('height') || img.clientHeight || 80;
             
-            const placeholder = document.createElement('div');
+            const placeholder = img.ownerDocument.createElement('div');
             placeholder.className = 'wireframe-crossed-box wireframe-img-placeholder';
             placeholder.style.width = width + 'px';
             placeholder.style.height = height + 'px';
@@ -192,7 +194,7 @@
         root.querySelectorAll('canvas, .chart-container, #chart, #grafik').forEach(chart => {
             if (chart.parentElement.classList.contains('grafik-box-wrapper')) return;
             
-            const wrapper = document.createElement('div');
+            const wrapper = chart.ownerDocument.createElement('div');
             wrapper.className = 'grafik-box-wrapper';
             wrapper.innerHTML = `
                 <div class="wireframe-crossed-box" style="width: 100%; height: 260px; margin: 15px 0;">
@@ -330,4 +332,5 @@
     } else {
         runTransformation();
         observeDocument(document);
+    }
 })();

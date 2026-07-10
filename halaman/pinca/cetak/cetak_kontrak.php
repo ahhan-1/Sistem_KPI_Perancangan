@@ -135,7 +135,7 @@ require "../templates/tpl_kontrak_kerja.php";
 <head>
     <meta charset="UTF-8">
     <title>Kontrak Kerja - <?= ucwords(strtolower($u['nama_cabang'] ?? '')) ?> - Tahun <?= $tahun ?></title>
-    <link rel="stylesheet" href="../../../aset/css/gaya.css">
+    <link rel="stylesheet" href="../../../aset/css/gaya.css?v=<?= time() ?>">
     <style>
         body {
             background: white;
@@ -213,7 +213,7 @@ require "../templates/tpl_kontrak_kerja.php";
                 window.close();
             }
         };
-    </script>    <script src="../../../aset/js/blueprint.js"></script>
+    </script>    <script src="../../../aset/js/blueprint.js?v=<?= time() ?>"></script>
 </body>
 
 </html>
