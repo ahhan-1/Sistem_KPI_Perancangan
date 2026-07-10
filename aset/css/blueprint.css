@@ -95,7 +95,7 @@ body.blueprint-mode [class*="no-data"] {
     border: 2px solid #000000 !important;
     color: #000000 !important;
     padding: 20px !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 20px;
 }
 
 /* Tables */
@@ -170,8 +170,8 @@ body.blueprint-mode input[type="button"],
 body.blueprint-mode a.tombol,
 body.blueprint-mode a[class*="btn"],
 body.blueprint-mode a[class*="tombol"],
-body.blueprint-mode [class*="tombol-"],
-body.blueprint-mode [class*="btn-"] {
+body.blueprint-mode a[class*="tombol-"], body.blueprint-mode button[class*="tombol-"], body.blueprint-mode input[class*="tombol-"],
+body.blueprint-mode a[class*="btn-"], body.blueprint-mode button[class*="btn-"], body.blueprint-mode input[class*="btn-"] {
     background-color: #ffffff !important;
     color: transparent !important;
     /* Hide text */
@@ -180,7 +180,7 @@ body.blueprint-mode [class*="btn-"] {
     height: 40px !important;
     padding: 0 15px !important;
     cursor: pointer !important;
-    display: inline-flex !important;
+    display: inline-flex;
     align-items: center !important;
     justify-content: center !important;
     text-decoration: none !important;
